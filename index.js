@@ -39,6 +39,20 @@ app.put('/pedidos/:id', (request, response) => {
     return response.json(updateBody);
 })
 
+//Deletando pedido
+app.delete('/pedidos/:id', (request, response) => {
+    const {id} = request.params;
+
+    const checkId = pedidos.findIndex(use => use.id === id);
+    if(checkId < 0) {
+        return response.status(404).json({error: 'Object not found!'});
+    }
+
+    pedidos.splice(checkId, 1);
+
+    return response.status(204).json();
+});
+
 app.listen(port, () => {
     console.log(`Porta inicializada: ${port}`);
 });
