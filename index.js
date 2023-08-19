@@ -37,7 +37,7 @@ app.put('/pedidos/:id', (request, response) => {
     pedidos[checkId] = updateBody;
 
     return response.json(updateBody);
-})
+});
 
 //Deletando pedido
 app.delete('/pedidos/:id', (request, response) => {
@@ -63,7 +63,22 @@ app.get('/pedidos/:id', (request, response) => {
     }
 
     return response.json(checkId);
-})
+});
+
+//Alterando um atributo pelo id
+app.patch('/pedidos/:id', (request, response) => {
+    const {id} = request.params;
+
+    const checkId = pedidos.find(use => use.id === id);
+    if(!checkId) {
+        return response.status(404).json({error: 'Object not found!'});
+    }
+
+    checkId.status = 'pronto';
+
+    return response.json(checkId);
+});
+
 
 app.listen(port, () => {
     console.log(`Porta inicializada: ${port}`);
