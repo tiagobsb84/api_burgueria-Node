@@ -21,8 +21,24 @@ app.post('/pedidos', (request, response) => {
     pedidos.push(pedido);
 
     return response.status(201).json(pedido);
+});
+
+//Atualizar pedido
+app.put('/pedidos/:id', (request, response) => {
+    const {id} = request.params;
+    const {order, clientName, price} = request.body;
+    const updateBody = {id, order, clientName, price};
+
+    const checkId = pedidos.findIndex(use => use.id === id);
+    if(checkId < 0) {
+        return response.status(404).json({error: "Object not found"});
+    }
+
+    pedidos[checkId] = updateBody;
+
+    return response.json(updateBody);
 })
 
 app.listen(port, () => {
     console.log(`Porta inicializada: ${port}`);
-})
+});
