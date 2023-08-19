@@ -53,6 +53,18 @@ app.delete('/pedidos/:id', (request, response) => {
     return response.status(204).json();
 });
 
+//Buscando apenas um pedido
+app.get('/pedidos/:id', (request, response) => {
+    const {id} = request.params;
+
+    const checkId = pedidos.find(use => use.id === id);
+    if(!checkId) {
+        return response.status(404).json({error: 'Object not found!'});
+    }
+
+    return response.json(checkId);
+})
+
 app.listen(port, () => {
     console.log(`Porta inicializada: ${port}`);
 });
